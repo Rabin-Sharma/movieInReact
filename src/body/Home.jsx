@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Card from "./Card";
 import Navbar from "../layouts/Navbar"
 import Footer from "../footer/Footer"
+import { API_KEY } from "../utils/constraints";
 
 const Home = ({searchTerm}) => {
   const [moviesData, setMoviesData] = useState([]);
@@ -9,16 +10,15 @@ const Home = ({searchTerm}) => {
     "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc";
   //  'https://api.themoviedb.org/3/search/movie?query=adult&include_adult=true&language=en-US&page=1';
   const getMovies = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYzYThjNmEwY2UxZGM2YWQyYjRhZjVmOTdlNzU5NiIsIm5iZiI6MTc0MzQyOTQwOC4wODMwMDAyLCJzdWIiOiI2N2VhOWYyMGFmNzUyYTNiMjRmNzIyOWEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.U5XW8lcOuFExYkXtIU9bAVg7gpKSiuW3_jpe4O3KD_w",
-      },
-    };
+    // const options = {
+    //   method: "GET",
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization: token,
+    //   },
+    // };
 
-    const data = await fetch(url, options)
+    const data = await fetch(url, API_KEY)
       .then((res) => res.json())
       .then((json) => {
         setMoviesData(json.results);

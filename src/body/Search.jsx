@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
+import { API_KEY } from "../utils/constraints";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,16 +28,16 @@ const Search = () => {
   };
   const getSearchedMovie = async () => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=true&language=en-US&page=1`;
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYzYThjNmEwY2UxZGM2YWQyYjRhZjVmOTdlNzU5NiIsIm5iZiI6MTc0MzQyOTQwOC4wODMwMDAyLCJzdWIiOiI2N2VhOWYyMGFmNzUyYTNiMjRmNzIyOWEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.U5XW8lcOuFExYkXtIU9bAVg7gpKSiuW3_jpe4O3KD_w",
-      },
-    };
+    // const options = {
+    //   method: "GET",
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization:
+    //       "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYzYThjNmEwY2UxZGM2YWQyYjRhZjVmOTdlNzU5NiIsIm5iZiI6MTc0MzQyOTQwOC4wODMwMDAyLCJzdWIiOiI2N2VhOWYyMGFmNzUyYTNiMjRmNzIyOWEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.U5XW8lcOuFExYkXtIU9bAVg7gpKSiuW3_jpe4O3KD_w",
+    //   },
+    // };
 
-    fetch(url, options)
+    fetch(url, API_KEY)
       .then((res) => res.json())
       .then((json) => setMovie(json.results))
       .catch((err) => console.error(err));
@@ -75,7 +76,7 @@ const Search = () => {
             </div>
           )} */}
           <div className="row justify-content-center">
-            {(movieList.length > 0&&searchTerm.length>0)
+            {movieList.length > 0 && searchTerm.length > 0
               ? movieList.map((movie, index) => (
                   <Card
                     key={movie.id}
