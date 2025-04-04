@@ -8,13 +8,7 @@ const MovieDetail = () => {
   const [movieDetail, setMovieDetail] = useState([]);
   const getDetail = async () => {
     const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`;
-    // const options = {
-    //   method: "GET",
-    //   headers: {
-    //     accept: "application/json",
-    //     Authorization: token,
-    //   },
-    // };
+
 
     await fetch(url, API_KEY)
       .then((res) => res.json())

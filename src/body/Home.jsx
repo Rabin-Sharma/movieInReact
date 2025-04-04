@@ -10,13 +10,7 @@ const Home = ({searchTerm}) => {
     "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc";
   //  'https://api.themoviedb.org/3/search/movie?query=adult&include_adult=true&language=en-US&page=1';
   const getMovies = async () => {
-    // const options = {
-    //   method: "GET",
-    //   headers: {
-    //     accept: "application/json",
-    //     Authorization: token,
-    //   },
-    // };
+
 
     const data = await fetch(url, API_KEY)
       .then((res) => res.json())
