@@ -6,12 +6,14 @@ import Navbar from "./layouts/Navbar";
 import Footer from "./footer/Footer";
 import MovieDetail from "./body/MovieDetail";
 import Search from "./body/Search";
+import ApiFetch from "./ApiFetch";
 
 const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
-      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <ApiFetch />
+      {/* <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Router>
         <Routes>
           <Route path="/" element={<Home searchTerm={searchTerm} />} />
@@ -20,7 +22,7 @@ const App = () => {
           <Route path='/movie/search' element={<Search />} />
         </Routes>
       </Router>
-      <Footer />
+      <Footer /> */}
     </>
   );
 };

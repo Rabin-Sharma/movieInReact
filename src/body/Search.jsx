@@ -29,7 +29,6 @@ const Search = () => {
   const getSearchedMovie = async () => {
     const url = `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=true&language=en-US&page=1`;
 
-
     fetch(url, API_KEY)
       .then((res) => res.json())
       .then((json) => setMovie(json.results))
