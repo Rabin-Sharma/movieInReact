@@ -12,17 +12,16 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
-      <ApiFetch />
-      {/* <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
       <Router>
         <Routes>
           <Route path="/" element={<Home searchTerm={searchTerm} />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path='/movie-detail/:id' element={<MovieDetail />} />
-          <Route path='/movie/search' element={<Search />} />
+          <Route path="/movie-detail/:id" element={<MovieDetail />} />
+          <Route path="/movie/search" element={<Search />} />
         </Routes>
       </Router>
-      <Footer /> */}
+      <Footer />
     </>
   );
 };

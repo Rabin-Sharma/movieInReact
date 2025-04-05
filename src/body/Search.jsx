@@ -5,6 +5,7 @@ import { API_KEY } from "../utils/constraints";
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movieList, setMovie] = useState("");
+  const [favourites, setFavourites] = useState([]);
 
   const [moviesData, setMoviesData] = useState([]);
   const url =
@@ -34,6 +35,25 @@ const Search = () => {
       .then((json) => setMovie(json.results))
       .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    const sotoredFav = JSON.parse(localStorage.getItem("favourites"));
+    console.log(sotoredFav);
+  }, [favourites]);
+
+  const handelFav = (movie) => {
+    let updatedFav;
+
+    if (favourites.some((fav) => fav.id === movie.id)) {
+      updatedFav = favourites.filter((fav) => fav.id !== movie.id);
+    } else {
+      updatedFav = [...favourites, movie];
+    }
+    //update the local storage
+    localStorage.setItem("favourites", JSON.stringify(updatedFav));
+    setFavourites(updatedFav);
+  };
+
   useEffect(() => {
     if (searchTerm.length > 0) {
       setMoviesData([]);
@@ -58,19 +78,13 @@ const Search = () => {
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         <div className="container my-4">
-          {/* {movieList.length > 0 ? (
-            <h2 className="text-center mb-4">
-              Search results for: {searchTerm}
-            </h2>
-          ) : (
-            <div class="alert alert-warning text-center" role="alert">
-              No match found
-            </div>
-          )} */}
           <div className="row justify-content-center">
             {movieList.length > 0 && searchTerm.length > 0
               ? movieList.map((movie, index) => (
                   <Card
+                    fav={() => {
+                      handelFav(movie);
+                    }}
                     key={movie.id}
                     id={movie.id}
                     title={movie.title}
@@ -87,6 +101,10 @@ const Search = () => {
                 ))
               : moviesData.map((movie, index) => (
                   <Card
+                    fav={() => {
+                      handelFav(movie);
+                    }}
+                    movie={movie}
                     key={movie.id}
                     id={movie.id}
                     title={movie.title}

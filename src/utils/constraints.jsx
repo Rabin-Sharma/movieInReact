@@ -3,8 +3,5 @@ export const API_KEY = {
   headers: {
     accept: "application/json",
     Authorization: import.meta.env.VITE_TOKEN,
-  },
-  body: {
-    
   }
 };
