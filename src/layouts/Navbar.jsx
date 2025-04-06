@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./navbar.css";
 
-const Navbar = ({ searchTerm, setSearchTerm }) => {
+const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
       <div className="container-fluid">
@@ -41,7 +41,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
               </a>
             </li>
           </ul>
-          <div className="d-flex">
+          {/* <div className="d-flex">
             <input
               className="form-control me-2"
               type="search"
@@ -53,7 +53,7 @@ const Navbar = ({ searchTerm, setSearchTerm }) => {
             <button className="btn btn-outline-success" type="button">
               dark
             </button>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

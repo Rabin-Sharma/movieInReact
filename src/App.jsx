@@ -9,13 +9,12 @@ import Search from "./body/Search";
 import ApiFetch from "./ApiFetch";
 
 const App = () => {
-  const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
-      <Navbar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Navbar />
       <Router>
         <Routes>
-          <Route path="/" element={<Home searchTerm={searchTerm} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/movie-detail/:id" element={<MovieDetail />} />
           <Route path="/movie/search" element={<Search />} />

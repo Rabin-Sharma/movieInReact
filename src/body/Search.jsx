@@ -1,38 +1,33 @@
 import React, { useEffect, useState } from "react";
 import Card from "./Card";
 import { API_KEY } from "../utils/constraints";
+import Pagination from "./Pagination";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [movieList, setMovie] = useState("");
   const [favourites, setFavourites] = useState([]);
-
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(0);
   const [moviesData, setMoviesData] = useState([]);
-  const url =
-    "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc";
-  //  'https://api.themoviedb.org/3/search/movie?query=adult&include_adult=true&language=en-US&page=1';
+  const url = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
   const getMovies = async () => {
-    const options = {
-      method: "GET",
-      headers: {
-        accept: "application/json",
-        Authorization:
-          "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYzYThjNmEwY2UxZGM2YWQyYjRhZjVmOTdlNzU5NiIsIm5iZiI6MTc0MzQyOTQwOC4wODMwMDAyLCJzdWIiOiI2N2VhOWYyMGFmNzUyYTNiMjRmNzIyOWEiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.U5XW8lcOuFExYkXtIU9bAVg7gpKSiuW3_jpe4O3KD_w",
-      },
-    };
-
-    const data = await fetch(url, options)
+    const data = await fetch(url, API_KEY)
       .then((res) => res.json())
       .then((json) => {
         setMoviesData(json.results);
+        setTotalPage(json.total_pages);
       });
   };
   const getSearchedMovie = async () => {
-    const url = `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=true&language=en-US&page=1`;
+    const url = `https://api.themoviedb.org/3/search/movie?query=${searchTerm}&include_adult=false&language=en-US&page=${page}`;
 
     fetch(url, API_KEY)
       .then((res) => res.json())
-      .then((json) => setMovie(json.results))
+      .then((json) => {
+        setMovie(json.results);
+        setTotalPage(json.total_pages);
+      })
       .catch((err) => console.error(err));
   };
 
@@ -62,7 +57,8 @@ const Search = () => {
       setMovie([]);
       getMovies();
     }
-  }, [searchTerm]);
+  }, [searchTerm, page]);
+  let displayMovie = searchTerm.length > 0 ? movieList : moviesData;
   return (
     <>
       <div className="container my-3">
@@ -78,49 +74,40 @@ const Search = () => {
           onChange={(event) => setSearchTerm(event.target.value)}
         />
         <div className="container my-4">
+          <Pagination
+            page={page}
+            setPage={setPage}
+            totalPages={totalPage>500?500:totalPage}
+          />
           <div className="row justify-content-center">
-            {movieList.length > 0 && searchTerm.length > 0
-              ? movieList.map((movie, index) => (
-                  <Card
-                    fav={() => {
-                      handelFav(movie);
-                    }}
-                    key={movie.id}
-                    id={movie.id}
-                    title={movie.title}
-                    // description={movie.overview}
-                    description={
-                      movie.overview.length >= 30
-                        ? movie.overview.slice(0, 30) + "....."
-                        : movie.overview
-                    }
-                    image={
-                      "https://image.tmdb.org/t/p/w500" + movie.poster_path
-                    }
-                  />
-                ))
-              : moviesData.map((movie, index) => (
-                  <Card
-                    fav={() => {
-                      handelFav(movie);
-                    }}
-                    movie={movie}
-                    key={movie.id}
-                    id={movie.id}
-                    title={movie.title}
-                    // description={movie.overview}
-                    description={
-                      movie.overview.length >= 30
-                        ? movie.overview.slice(0, 30) + "....."
-                        : movie.overview
-                    }
-                    image={
-                      "https://image.tmdb.org/t/p/w500" + movie.poster_path
-                    }
-                  />
-                ))}
+            {displayMovie.length > 0 ? (
+              displayMovie.map((movie, index) => (
+                <Card
+                  fav={() => {
+                    handelFav(movie);
+                  }}
+                  key={movie.id}
+                  id={movie.id}
+                  title={movie.title}
+                  // description={movie.overview}
+                  description={
+                    movie.overview.length >= 30
+                      ? movie.overview.slice(0, 30) + "....."
+                      : movie.overview
+                  }
+                  image={"https://image.tmdb.org/t/p/w500" + movie.poster_path}
+                />
+              ))
+            ) : (
+              <div>No movie Found</div>
+            )}
           </div>
         </div>
+        <Pagination
+          page={page}
+          setPage={setPage}
+          totalPages={totalPage>500?500:totalPage}
+        />
       </div>
     </>
   );
