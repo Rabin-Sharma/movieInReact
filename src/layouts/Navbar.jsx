@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./navbar.css";
+import ThemeToggler from "../ThemeToggler/ThemeToggler";
 
 const Navbar = () => {
   return (
@@ -39,6 +40,9 @@ const Navbar = () => {
               <a className="nav-link active" aria-current="page" href="/movie/search">
                 Search
               </a>
+            </li>
+            <li className="nav-item">
+            <ThemeToggler></ThemeToggler>
             </li>
           </ul>
           {/* <div className="d-flex">

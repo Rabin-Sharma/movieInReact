@@ -1,21 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { API_KEY } from "../utils/constraints";
 import Card from "./Card";
+import useFetchMovies from "../Services/fetchdata";
 
 const PopularMovie = () => {
-  const [moviesData, setMoviesData] = useState([]);
+  // const [moviesData, setMoviesData] = useState([]);
   const url =
     "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1";
-  const getMovies = async () => {
-    const data = await fetch(url, API_KEY)
-      .then((res) => res.json())
-      .then((json) => {
-        setMoviesData(json.results);
-      });
-  };
-  useEffect(() => {
-    getMovies();
-  }, []);
+
+  const { data: moviesData, isLoading } = useFetchMovies(url);
+  // const getMovies = async () => {
+  //   const data = await fetch(url, API_KEY)
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       setMoviesData(json.results);
+  //     });
+  // };
+  // useEffect(() => {
+  //   getMovies();
+  // }, []);
 
   return (
     <div className="container my-4">
